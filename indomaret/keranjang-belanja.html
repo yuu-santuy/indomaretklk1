@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keranjang Belanja Indomaret</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="home.css"> <style>
+        /* Gaya khusus untuk halaman keranjang belanja */
+        .cart-container {
+            padding: 40px 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            max-width: 900px;
+            margin: 40px auto;
+        }
+
+        .cart-container h1 {
+            color: #ED1C24;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+            margin-bottom: 15px;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .cart-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 15px;
+        }
+
+        .cart-item-info {
+            flex-grow: 1;
+        }
+
+        .cart-item-info h3 {
+            margin: 0 0 5px 0;
+            font-size: 1.1em;
+            color: #333;
+        }
+
+        .cart-item-info p {
+            margin: 0;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .cart-item-price {
+            font-weight: bold;
+            color: #004F9F;
+            font-size: 1.1em;
+            margin-left: 15px;
+            white-space: nowrap; /* Prevent price from wrapping */
+        }
+
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: 20px;
+        }
+
+        .cart-item-quantity input {
+            width: 50px;
+            padding: 5px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .cart-item-remove-btn {
+            background-color: #ED1C24;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 0.9em;
+        }
+
+        .cart-item-remove-btn:hover {
+            background-color: #C00F17;
+        }
+
+        .cart-summary {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+            text-align: right;
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .cart-summary span {
+            color: #004F9F;
+        }
+
+        .cart-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 20px;
+        }
+
+        .cart-actions button {
+            flex: 1;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .cart-actions .checkout-btn {
+            background-color: #004F9F;
+            color: #fff;
+        }
+
+        .cart-actions .checkout-btn:hover {
+            background-color: #003F7F;
+        }
+
+        .cart-actions .clear-cart-btn {
+            background-color: #ccc;
+            color: #333;
+        }
+
+        .cart-actions .clear-cart-btn:hover {
+            background-color: #bbb;
+        }
+
+        .empty-cart-message {
+            text-align: center;
+            font-size: 1.2em;
+            color: #777;
+            padding: 50px 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .cart-item {
+                flex-wrap: wrap;
+                justify-content: center;
+                text-align: center;
+            }
+            .cart-item img {
+                margin-bottom: 10px;
+                margin-right: 0;
+            }
+            .cart-item-info {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            .cart-item-actions {
+                width: 100%;
+                justify-content: center;
+                margin-left: 0;
+            }
+            .cart-item-price {
+                width: 100%;
+                text-align: center;
+                margin-left: 0;
+                margin-top: 10px;
+            }
+            .cart-actions {
+                flex-direction: column;
+            }
+            .cart-actions button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="menuOverlay" class="overlay" onclick="closeMenu()"></div>
+
+    <div id="sidebarMenu" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeMenu()">&times;</a>
+        <h2>Menu Indomaret</h2>
+        <a href="home.html">🏠 Beranda</a>
+        <a href="kode-penukaran.html">📦 Kode Penukaran</a>
+        <a href="info-layanan.html">ℹ️ Info Layanan</a>
+        <a href="bantuan.html">❓ Bantuan</a>
+        <a href="keranjang-belanja.html">🛒 Keranjang Belanja</a> <a href="produk-favorit.html">⭐ Produk Favorit</a>
+        <a href="promo-diskon.html">🎁 Promo & Diskon</a>
+        <a href="lokasi-toko.html">📍 Lokasi Toko</a>
+
+        <div class="sidebar-section-divider"></div>
+        <h2 class="sidebar-section-title">Pengaturan</h2>
+        <a href="#">⚙️ Edit Akun</a>
+        <a href="#">🎨 Tema</a>
+        <a href="#">🌐 Bahasa</a>
+        <a href="login.html" onclick="logout()">➡️ Logout</a>
+    </div>
+
+    <header class="header">
+        <div class="container header-content">
+            <div class="logo">
+                <img src="indmrt.jpg" alt="Logo Indomaret">
+            </div>
+            <nav class="nav-icons">
+                <a href="login.html">
+                    👤 Akun
+                </a>
+
+                <a href="#" class="menu-icon" onclick="openMenu()">
+                    ☰ Menu
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container cart-container">
+            <h1>Keranjang Belanja Anda</h1>
+            <div id="cartItemsList">
+                <p class="empty-cart-message" id="emptyCartMessage">Keranjang belanja Anda kosong.</p>
+            </div>
+
+            <div class="cart-summary" id="cartSummary">
+                Total Harga: <span id="cartTotalPrice">Rp 0</span>
+            </div>
+
+            <div class="cart-actions">
+                <button class="checkout-btn" onclick="checkout()">Pesan Sekarang</button>
+                <button class="clear-cart-btn" onclick="clearCart()">Batalkan Pesanan</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Data Produk (sama seperti di home.html dan product-detail.html)
+        // Sebaiknya ini di-refactor ke file terpisah
+        const productsData = [
+            {
+                id: 'ultra-milk-coklat',
+                name: 'Ultra Milk Coklat',
+                category: 'susu',
+                price: '5500', // Gunakan angka untuk perhitungan
+                rating: 4.5,
+                image: 'ultramilk.jpg',
+                description: 'Ultra Milk Coklat adalah susu UHT berkualitas tinggi dengan rasa coklat yang lezat, kaya vitamin dan mineral, cocok untuk segala usia.',
+                comments: []
+            },
+            {
+                id: 'chitato-sapi-panggang',
+                name: 'Chitato Sapi Panggang',
+                category: 'snack',
+                price: '10000',
+                rating: 5.0,
+                image: 'chitato.jpg',
+                description: 'Chitato Sapi Panggang adalah keripik kentang renyah dengan bumbu sapi panggang yang kuat, cocok untuk camilan santai.',
+                comments: []
+            },
+            {
+                id: 'qtela-singkong-balado',
+                name: 'Qtela Singkong Balado',
+                category: 'snack',
+                price: '8000',
+                rating: 4.0,
+                image: 'qtela.jpg',
+                description: 'Qtela Singkong Balado adalah keripik singkong dengan rasa balado pedas manis yang menggugah selera, camilan tradisional dengan sentuhan modern.',
+                comments: []
+            },
+            {
+                id: 'nutriboost-strawberry',
+                name: 'Nutriboost Strawberry',
+                category: 'susu',
+                price: '7500',
+                rating: 4.5,
+                image: 'nutribus.jpg',
+                description: 'Nutriboost Strawberry adalah minuman susu rasa strawberry yang menyegarkan, diperkaya dengan vitamin dan mineral untuk menjaga stamina.',
+                comments: []
+            },
+            {
+                id: 'mie-sedaap-goreng',
+                name: 'Mie Sedaap Goreng',
+                category: 'mie instan',
+                price: '3000',
+                rating: 5.0,
+                image: 'mie.jpg',
+                description: 'Mie Sedaap Goreng adalah mie instan goreng dengan bumbu kaya rasa dan taburan kriuk, sajian cepat dan lezat kapan saja.',
+                comments: []
+            },
+            {
+                id: 'susu-full-cream',
+                name: 'Susu Full Cream',
+                category: 'susu',
+                price: '7000',
+                rating: 5.0,
+                image: 'https://via.placeholder.com/150/FFD100/000000?text=Susu+Full+Cream',
+                description: 'Susu full cream pilihan untuk kebutuhan gizi harian Anda. Kaya akan kalsium dan vitamin D.',
+                comments: []
+            },
+            {
+                id: 'susu-plain',
+                name: 'Susu Plain',
+                category: 'susu',
+                price: '6000',
+                rating: 4.0,
+                image: 'https://via.placeholder.com/150/004F9F/FFFFFF?text=Susu+Plain',
+                description: 'Susu plain rendah lemak, cocok untuk diet atau sebagai tambahan dalam masakan dan minuman.',
+                comments: []
+            }
+        ];
+
+        function openMenu() {
+            document.getElementById("sidebarMenu").style.width = "250px";
+            document.getElementById("menuOverlay").style.display = "block";
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeMenu() {
+            document.getElementById("sidebarMenu").style.width = "0";
+            document.getElementById("menuOverlay").style.display = "none";
+            document.body.style.overflow = "auto";
+        }
+
+        function logout() {
+            localStorage.removeItem('loggedInUserName');
+            window.location.href = 'login.html';
+            alert('Anda telah berhasil logout.');
+        }
+
+        // --- KERANJANG BELANJA FUNCTIONS ---
+
+        // Fungsi untuk mendapatkan keranjang dari localStorage
+        function getCart() {
+            const cartString = localStorage.getItem('indomaretCart');
+            return cartString ? JSON.parse(cartString) : [];
+        }
+
+        // Fungsi untuk menyimpan keranjang ke localStorage
+        function saveCart(cart) {
+            localStorage.setItem('indomaretCart', JSON.stringify(cart));
+        }
+
+        // Fungsi untuk menambahkan produk ke keranjang
+        // Perhatikan bahwa ini akan dipanggil dari home.html dan product-detail.html
+        function addToCart(productId) {
+            const cart = getCart();
+            const existingItem = cart.find(item => item.id === productId);
+
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                const product = productsData.find(p => p.id === productId);
+                if (product) {
+                    cart.push({
+                        id: product.id,
+                        name: product.name,
+                        price: parseFloat(product.price), // Pastikan harga adalah angka
+                        image: product.image,
+                        quantity: 1,
+                        selected: true // Default selected in cart
+                    });
+                }
+            }
+            saveCart(cart);
+            alert(`${productsData.find(p => p.id === productId).name} ditambahkan ke keranjang!`);
+            renderCartItems(); // Perbarui tampilan keranjang jika sedang di halaman keranjang
+        }
+
+        // Fungsi untuk menampilkan item di keranjang belanja
+        function renderCartItems() {
+            const cart = getCart();
+            const cartItemsListDiv = document.getElementById('cartItemsList');
+            const cartTotalPriceSpan = document.getElementById('cartTotalPrice');
+            const emptyCartMessage = document.getElementById('emptyCartMessage');
+            let totalPrice = 0;
+
+            cartItemsListDiv.innerHTML = ''; // Bersihkan daftar yang ada
+
+            if (cart.length === 0) {
+                emptyCartMessage.style.display = 'block';
+                cartTotalPriceSpan.textContent = `Rp 0`;
+                return;
+            } else {
+                emptyCartMessage.style.display = 'none';
+            }
+
+            cart.forEach(item => {
+                const cartItemDiv = document.createElement('div');
+                cartItemDiv.classList.add('cart-item');
+                cartItemDiv.innerHTML = `
+                    <input type="checkbox" class="item-checkbox" data-id="${item.id}" ${item.selected ? 'checked' : ''} onchange="toggleItemSelection('${item.id}')">
+                    <img src="${item.image}" alt="${item.name}">
+                    <div class="cart-item-info">
+                        <h3>${item.name}</h3>
+                        <p>Harga: Rp ${item.price.toLocaleString('id-ID')}</p>
+                    </div>
+                    <div class="cart-item-actions">
+                        <div class="cart-item-quantity">
+                            <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity('${item.id}', this.value)">
+                        </div>
+                        <button class="cart-item-remove-btn" onclick="removeItemFromCart('${item.id}')">Hapus</button>
+                    </div>
+                    <span class="cart-item-price">Rp ${(item.price * item.quantity).toLocaleString('id-ID')}</span>
+                `;
+                cartItemsListDiv.appendChild(cartItemDiv);
+
+                if (item.selected) {
+                    totalPrice += item.price * item.quantity;
+                }
+            });
+
+            cartTotalPriceSpan.textContent = `Rp ${totalPrice.toLocaleString('id-ID')}`;
+        }
+
+        // Fungsi untuk memperbarui kuantitas produk di keranjang
+        function updateQuantity(productId, newQuantity) {
+            let cart = getCart();
+            const itemIndex = cart.findIndex(item => item.id === productId);
+
+            if (itemIndex > -1) {
+                newQuantity = parseInt(newQuantity);
+                if (newQuantity < 1 || isNaN(newQuantity)) {
+                    newQuantity = 1; // Minimum quantity is 1
+                }
+                cart[itemIndex].quantity = newQuantity;
+                saveCart(cart);
+                renderCartItems(); // Render ulang keranjang
+            }
+        }
+
+        // Fungsi untuk menghapus item dari keranjang
+        function removeItemFromCart(productId) {
+            let cart = getCart();
+            cart = cart.filter(item => item.id !== productId);
+            saveCart(cart);
+            renderCartItems(); // Render ulang keranjang
+        }
+
+        // Fungsi untuk mengubah status centang item
+        function toggleItemSelection(productId) {
+            let cart = getCart();
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.selected = !item.selected;
+                saveCart(cart);
+                renderCartItems(); // Render ulang untuk update total harga
+            }
+        }
+
+        // Fungsi untuk tombol "Pesan Sekarang" (Checkout)
+        function checkout() {
+            const cart = getCart();
+            const selectedItems = cart.filter(item => item.selected);
+
+            if (selectedItems.length === 0) {
+                alert('Tidak ada barang yang dipilih untuk dipesan.');
+                return;
+            }
+
+            const totalPrice = selectedItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const confirmation = confirm(`Anda akan memesan ${selectedItems.length} barang dengan total Rp ${totalPrice.toLocaleString('id-ID')}. Lanjutkan?`);
+
+            if (confirmation) {
+                // Logika pemesanan sebenarnya akan ada di sini
+                // Contoh: mengirim data pesanan ke server
+                alert('Pesanan Anda berhasil dibuat! Terima kasih telah berbelanja.');
+                clearCart(); // Kosongkan keranjang setelah checkout
+            }
+        }
+
+        // Fungsi untuk tombol "Batalkan Pesanan" (Clear Cart)
+        function clearCart() {
+            if (confirm('Anda yakin ingin mengosongkan seluruh keranjang belanja?')) {
+                localStorage.removeItem('indomaretCart');
+                renderCartItems(); // Render ulang keranjang (akan menunjukkan keranjang kosong)
+                alert('Keranjang belanja Anda telah dikosongkan.');
+            }
+        }
+
+        // Panggil fungsi renderCartItems saat halaman keranjang belanja dimuat
+        document.addEventListener('DOMContentLoaded', renderCartItems);
+    </script>
+</body>
+</html>

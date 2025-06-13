@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Produk Indomaret</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="home.css">
+    <style>
+        /* Gaya khusus untuk halaman detail produk */
+        .product-detail-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            max-width: 900px;
+            margin: 40px auto;
+        }
+
+        .product-detail-image {
+            width: 100%;
+            max-width: 350px;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .product-detail-info {
+            text-align: center;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .product-detail-info h1 {
+            color: #ED1C24;
+            font-size: 2.2em;
+            margin-bottom: 10px;
+        }
+
+        .product-detail-info .price {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #004F9F;
+            margin-bottom: 15px;
+        }
+
+        .product-detail-info .rating {
+            font-size: 1.1em;
+            color: #FFD100;
+            margin-bottom: 20px;
+        }
+        .product-detail-info .rating span {
+             color: #FFD100; /* Ensure stars are yellow */
+        }
+
+
+        .product-detail-description {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #555;
+            text-align: justify;
+            margin-bottom: 30px;
+        }
+
+        .add-to-cart-large-btn {
+            background-color: #ED1C24;
+            color: #fff;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-bottom: 30px;
+            width: 80%;
+            max-width: 300px;
+        }
+
+        .add-to-cart-large-btn:hover {
+            background-color: #C00F17;
+        }
+
+        .comment-section {
+            width: 100%;
+            max-width: 600px;
+            margin-top: 30px;
+            border-top: 1px solid #eee;
+            padding-top: 30px;
+        }
+
+        .comment-section h2 {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .comment-list {
+            margin-bottom: 30px;
+        }
+
+        .comment-item {
+            background-color: #f9f9f9;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .comment-item strong {
+            color: #004F9F;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .comment-item p {
+            font-size: 0.95em;
+            color: #444;
+            margin: 0;
+        }
+
+        .add-comment-form {
+            background-color: #f0f2f5;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            text-align: left;
+        }
+
+        .add-comment-form h3 {
+            font-size: 1.4em;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .add-comment-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .add-comment-form input[type="text"],
+        .add-comment-form textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            outline: none;
+        }
+
+        .add-comment-form textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .add-comment-form button {
+            background-color: #004F9F;
+            color: #fff;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .add-comment-form button:hover {
+            background-color: #003F7F;
+        }
+
+        /* Responsiveness for smaller screens */
+        @media (max-width: 768px) {
+            .product-detail-container {
+                margin: 20px 10px;
+                padding: 25px 15px;
+            }
+
+            .product-detail-info h1 {
+                font-size: 1.8em;
+            }
+
+            .product-detail-info .price {
+                font-size: 1.5em;
+            }
+
+            .product-detail-description {
+                font-size: 1em;
+            }
+
+            .add-to-cart-large-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="menuOverlay" class="overlay" onclick="closeMenu()"></div>
+
+    <div id="sidebarMenu" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeMenu()">&times;</a>
+        <h2>Menu Indomaret</h2>
+        <a href="home.html">🏠 Beranda</a>
+        <a href="kode-penukaran.html">📦 Kode Penukaran</a>
+        <a href="info-layanan.html">ℹ️ Info Layanan</a>
+        <a href="bantuan.html">❓ Bantuan</a>
+        <a href="keranjang-belanja.html">🛒 Keranjang Belanja</a> <a href="produk-favorit.html">⭐ Produk Favorit</a>
+        <a href="promo-diskon.html">🎁 Promo & Diskon</a>
+        <a href="lokasi-toko.html">📍 Lokasi Toko</a>
+
+        <div class="sidebar-section-divider"></div>
+        <h2 class="sidebar-section-title">Pengaturan</h2>
+        <a href="#">⚙️ Edit Akun</a>
+        <a href="#">🎨 Tema</a>
+        <a href="#">🌐 Bahasa</a>
+        <a href="login.html" onclick="logout()">➡️ Logout</a>
+    </div>
+
+    <header class="header">
+        <div class="container header-content">
+            <div class="logo">
+                <img src="indmrt.jpg" alt="Logo Indomaret">
+            </div>
+            <nav class="nav-icons">
+                <a href="login.html">
+                    👤 Akun
+                </a>
+
+                <a href="#" class="menu-icon" onclick="openMenu()">
+                    ☰ Menu
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container product-detail-container">
+            <img id="productImage" class="product-detail-image" src="" alt="Gambar Produk">
+            <div class="product-detail-info">
+                <h1 id="productName">Nama Produk</h1>
+                <p class="price" id="productPrice">Rp 0</p>
+                <div class="rating" id="productRating">
+                    <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>☆</span> (0.0)
+                </div>
+                <p id="productDescription" class="product-detail-description">
+                    Deskripsi lengkap produk akan dimuat di sini.
+                </p>
+                <button class="add-to-cart-large-btn" id="addToCartDetailBtn">🛒 Tambah ke Keranjang</button>
+            </div>
+
+            <div class="comment-section">
+                <h2>Komentar Pembeli</h2>
+                <div id="commentList" class="comment-list">
+                    <div class="comment-item">
+                        <strong>Pengguna A</strong>
+                        <p>Produk ini sangat bagus! Rekomended.</p>
+                    </div>
+                    <div class="comment-item">
+                        <strong>Pengguna B</strong>
+                        <p>Pengiriman cepat dan kualitas produk oke.</p>
+                    </div>
+                </div>
+
+                <div class="add-comment-form">
+                    <h3>Tambahkan Komentar Anda</h3>
+                    <label for="commenterName">Nama Anda:</label>
+                    <input type="text" id="commenterName" placeholder="Masukkan nama Anda" required>
+
+                    <label for="commentText">Komentar:</label>
+                    <textarea id="commentText" placeholder="Tulis komentar Anda di sini..." required></textarea>
+
+                    <button onclick="addComment()">Kirim Komentar</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Data Produk (ini akan digunakan oleh home.html dan product-detail.html)
+        const productsData = [
+            {
+                id: 'ultra-milk-coklat',
+                name: 'Ultra Milk Coklat',
+                category: 'susu',
+                price: '5500', // Gunakan angka untuk perhitungan
+                rating: 4.5,
+                image: 'ultramilk.jpg',
+                description: 'Ultra Milk Coklat adalah susu UHT berkualitas tinggi dengan rasa coklat yang lezat, kaya vitamin dan mineral, cocok untuk segala usia.',
+                comments: []
+            },
+            {
+                id: 'chitato-sapi-panggang',
+                name: 'Chitato Sapi Panggang',
+                category: 'snack',
+                price: '10000',
+                rating: 5.0,
+                image: 'chitato.jpg',
+                description: 'Chitato Sapi Panggang adalah keripik kentang renyah dengan bumbu sapi panggang yang kuat, cocok untuk camilan santai.',
+                comments: []
+            },
+            {
+                id: 'qtela-singkong-balado',
+                name: 'Qtela Singkong Balado',
+                category: 'snack',
+                price: '8000',
+                rating: 4.0,
+                image: 'qtela.jpg',
+                description: 'Qtela Singkong Balado adalah keripik singkong dengan rasa balado pedas manis yang menggugah selera, camilan tradisional dengan sentuhan modern.',
+                comments: []
+            },
+            {
+                id: 'nutriboost-strawberry',
+                name: 'Nutriboost Strawberry',
+                category: 'susu',
+                price: '7500',
+                rating: 4.5,
+                image: 'nutribus.jpg',
+                description: 'Nutriboost Strawberry adalah minuman susu rasa strawberry yang menyegarkan, diperkaya dengan vitamin dan mineral untuk menjaga stamina.',
+                comments: []
+            },
+            {
+                id: 'mie-sedaap-goreng',
+                name: 'Mie Sedaap Goreng',
+                category: 'mie instan',
+                price: '3000',
+                rating: 5.0,
+                image: 'mie.jpg',
+                description: 'Mie Sedaap Goreng adalah mie instan goreng dengan bumbu kaya rasa dan taburan kriuk, sajian cepat dan lezat kapan saja.',
+                comments: []
+            },
+            {
+                id: 'susu-full-cream',
+                name: 'Susu Full Cream',
+                category: 'susu',
+                price: '7000',
+                rating: 5.0,
+                image: 'https://via.placeholder.com/150/FFD100/000000?text=Susu+Full+Cream',
+                description: 'Susu full cream pilihan untuk kebutuhan gizi harian Anda. Kaya akan kalsium dan vitamin D.',
+                comments: []
+            },
+            {
+                id: 'susu-plain',
+                name: 'Susu Plain',
+                category: 'susu',
+                price: '6000',
+                rating: 4.0,
+                image: 'https://via.placeholder.com/150/004F9F/FFFFFF?text=Susu+Plain',
+                description: 'Susu plain rendah lemak, cocok untuk diet atau sebagai tambahan dalam masakan dan minuman.',
+                comments: []
+            }
+        ];
+
+        function openMenu() {
+            document.getElementById("sidebarMenu").style.width = "250px";
+            document.getElementById("menuOverlay").style.display = "block";
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeMenu() {
+            document.getElementById("sidebarMenu").style.width = "0";
+            document.getElementById("menuOverlay").style.display = "none";
+            document.body.style.overflow = "auto";
+        }
+
+        function logout() {
+            localStorage.removeItem('loggedInUserName');
+            window.location.href = 'login.html';
+            alert('Anda telah berhasil logout.');
+        }
+
+        function openSettingsMenu() {
+            openMenu();
+        }
+
+        function getProductIdFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id');
+        }
+
+        function loadProductDetails() {
+            const productId = getProductIdFromUrl();
+            const product = productsData.find(p => p.id === productId);
+
+            if (product) {
+                document.getElementById('productImage').src = product.image;
+                document.getElementById('productName').textContent = product.name;
+                // Format harga saat ditampilkan
+                document.getElementById('productPrice').textContent = `Rp ${parseFloat(product.price).toLocaleString('id-ID')}`;
+                document.getElementById('productDescription').textContent = product.description;
+
+                const ratingContainer = document.getElementById('productRating');
+                ratingContainer.innerHTML = '';
+                const fullStars = Math.floor(product.rating);
+                const hasHalfStar = product.rating % 1 !== 0;
+
+                for (let i = 0; i < fullStars; i++) {
+                    ratingContainer.innerHTML += '<span>⭐</span>';
+                }
+                if (hasHalfStar) {
+                    ratingContainer.innerHTML += '<span>½⭐</span>';
+                }
+                for (let i = 0; i < (5 - Math.ceil(product.rating)); i++) {
+                    ratingContainer.innerHTML += '<span>☆</span>';
+                }
+                ratingContainer.innerHTML += ` (${product.rating})`;
+
+                renderComments(product.comments);
+
+                // Tambahkan event listener untuk tombol "Tambah ke Keranjang" di halaman detail
+                document.getElementById('addToCartDetailBtn').onclick = () => addToCart(product.id);
+
+            } else {
+                document.getElementById('productName').textContent = 'Produk Tidak Ditemukan';
+                document.getElementById('productPrice').textContent = '';
+                document.getElementById('productRating').textContent = '';
+                document.getElementById('productDescription').textContent = 'Maaf, produk yang Anda cari tidak tersedia.';
+                document.getElementById('productImage').src = '';
+                document.getElementById('commentList').innerHTML = '<p>Tidak ada komentar untuk produk ini.</p>';
+                document.getElementById('addToCartDetailBtn').style.display = 'none'; // Sembunyikan tombol keranjang
+                document.querySelector('.add-comment-form').style.display = 'none'; // Sembunyikan form komentar
+            }
+        }
+
+        function renderComments(comments) {
+            const commentListDiv = document.getElementById('commentList');
+            commentListDiv.innerHTML = '';
+
+            if (comments && comments.length > 0) {
+                comments.forEach(comment => {
+                    const commentItem = document.createElement('div');
+                    commentItem.classList.add('comment-item');
+                    commentItem.innerHTML = `<strong>${comment.user}</strong><p>${comment.text}</p>`;
+                    commentListDiv.appendChild(commentItem);
+                });
+            } else {
+                commentListDiv.innerHTML = '<p>Belum ada komentar untuk produk ini.</p>';
+            }
+        }
+
+        function addComment() {
+            const commenterName = document.getElementById('commenterName').value.trim();
+            const commentText = document.getElementById('commentText').value.trim();
+            const productId = getProductIdFromUrl();
+            const product = productsData.find(p => p.id === productId);
+
+            if (commenterName && commentText && product) {
+                const newComment = { user: commenterName, text: commentText };
+                // Pastikan array komentar ada
+                if (!product.comments) {
+                    product.comments = [];
+                }
+                product.comments.push(newComment);
+
+                renderComments(product.comments);
+
+                document.getElementById('commenterName').value = '';
+                document.getElementById('commentText').value = '';
+
+                alert('Komentar berhasil ditambahkan!');
+            } else {
+                alert('Nama dan komentar tidak boleh kosong!');
+            }
+        }
+
+        // --- KERANJANG BELANJA FUNCTIONS (Duplikat dari keranjang-belanja.html agar bisa diakses) ---
+        // IDEALNYA, FUNGSI-FUNGSI INI DILETAKKAN DI FILE JS TERPISAH DAN DI-INCLUDE KE SEMUA HALAMAN
+        function getCart() {
+            const cartString = localStorage.getItem('indomaretCart');
+            return cartString ? JSON.parse(cartString) : [];
+        }
+
+        function saveCart(cart) {
+            localStorage.setItem('indomaretCart', JSON.stringify(cart));
+        }
+
+        function addToCart(productId) {
+            const cart = getCart();
+            const existingItem = cart.find(item => item.id === productId);
+
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                const product = productsData.find(p => p.id === productId);
+                if (product) {
+                    // Pastikan harga adalah angka saat ditambahkan ke keranjang
+                    cart.push({
+                        id: product.id,
+                        name: product.name,
+                        price: parseFloat(product.price),
+                        image: product.image,
+                        quantity: 1,
+                        selected: true
+                    });
+                }
+            }
+            saveCart(cart);
+            alert(`${productsData.find(p => p.id === productId).name} ditambahkan ke keranjang!`);
+            // Tidak perlu renderCartItems() di product-detail.html
+        }
+        // --- END KERANJANG BELANJA FUNCTIONS ---
+
+
+        document.addEventListener('DOMContentLoaded', loadProductDetails);
+    </script>
+</body>
+</html>

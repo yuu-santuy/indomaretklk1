@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indomaret Online (Contoh)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+
+    <div id="menuOverlay" class="overlay" onclick="closeMenu()"></div>
+
+    <div id="sidebarMenu" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeMenu()">&times;</a>
+        <h2>Menu Indomaret</h2>
+        <a href="home.html">🏠 Beranda</a>
+        <a href="kode-penukaran.html">📦 Kode Penukaran</a>
+        <a href="info-layanan.html">ℹ️ Info Layanan</a>
+        <a href="bantuan.html">❓ Bantuan</a>
+        <a href="keranjang-belanja.html">🛒 Keranjang Belanja</a> <a href="produk-favorit.html">⭐ Produk Favorit</a>
+        <a href="promo-diskon.html">🎁 Promo & Diskon</a>
+        <a href="lokasi-toko.html">📍 Lokasi Toko</a>
+
+        <div class="sidebar-section-divider"></div>
+        <h2 class="sidebar-section-title">Pengaturan</h2>
+        <a href="#">⚙️ Edit Akun</a>
+        <a href="#">🎨 Tema</a>
+        <a href="#">🌐 Bahasa</a>
+        <a href="login.html" onclick="logout()">➡️ Logout</a>
+    </div>
+
+    <header class="header">
+        <div class="container header-content">
+            <div class="logo">
+                <img src="indmrt.jpg" alt="Logo Indomaret">
+            </div>
+            <nav class="nav-icons">
+                <a href="login.html">
+                    👤 Akun
+                </a>
+
+                <a href="#" class="menu-icon" onclick="openMenu()">
+                    ☰ Menu
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="search-bar">
+        <div class="container">
+            <input type="text" id="searchInput" placeholder="Cari produk di Indomaret..." onkeyup="searchProductsOnType()">
+            <button type="submit" onclick="searchProducts()">Cari</button>
+        </div>
+    </section>
+
+    <main class="main-content">
+        <div class="container">
+            <h1>Selamat Datang di Indomaret Online!</h1>
+            <p>Ini adalah tampilan dasar halaman utama indoWeb Kelompok 1.</p>
+
+            <div class="product-grid" id="productGrid">
+                <div class="product-item" data-category="susu" data-id="ultra-milk-coklat">
+                    <img src="ultramilk.jpg" alt="Ultra Milk Coklat" onclick="viewProductDetail('ultra-milk-coklat')">
+                    <h3>Ultra Milk Coklat</h3>
+                    <p class="price">Rp 5.500</p>
+                    <div class="rating">
+                        <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>☆</span> (4.5)
+                    </div>
+                    <button class="add-to-cart-btn" onclick="addToCart('ultra-milk-coklat')">+</button> </div>
+
+                <div class="product-item" data-category="snack" data-id="chitato-sapi-panggang">
+                    <img src="chitato.jpg" alt="Chitato Sapi Panggang" onclick="viewProductDetail('chitato-sapi-panggang')">
+                    <h3>Chitato Sapi Panggang</h3>
+                    <p class="price">Rp 10.000</p>
+                    <div class="rating">
+                        <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span> (5.0)
+                    </div>
+                    <button class="add-to-cart-btn" onclick="addToCart('chitato-sapi-panggang')">+</button> </div>
+
+                <div class="product-item" data-category="snack" data-id="qtela-singkong-balado">
+                    <img src="qtela.jpg" alt="Qtela Singkong Balado" onclick="viewProductDetail('qtela-singkong-balado')">
+                    <h3>Qtela Singkong Balado</h3>
+                    <p class="price">Rp 8.000</p>
+                    <div class="rating">
+                        <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>☆</span> (4.0)
+                    </div>
+                    <button class="add-to-cart-btn" onclick="addToCart('qtela-singkong-balado')">+</button> </div>
+
+                <div class="product-item" data-category="susu" data-id="nutriboost-strawberry">
+                    <img src="nutribus.jpg" alt="Nutriboost Strawberry" onclick="viewProductDetail('nutriboost-strawberry')">
+                    <h3>Nutriboost Strawberry</h3>
+                    <p class="price">Rp 7.500</p>
+                    <div class="rating">
+                        <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>☆</span> (4.5)
+                    </div>
+                    <button class="add-to-cart-btn" onclick="addToCart('nutriboost-strawberry')">+</button> </div>
+
+                <div class="product-item" data-category="mie instan" data-id="mie-sedaap-goreng">
+                    <img src="mie.jpg" alt="Mie Sedaap Goreng" onclick="viewProductDetail('mie-sedaap-goreng')">
+                    <h3>Mie Sedaap Goreng</h3>
+                    <p class="price">Rp 3.000</p>
+                    <div class="rating">
+                        <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span> (5.0)
+                    </div>
+                    <button class="add-to-cart-btn" onclick="addToCart('mie-sedaap-goreng')">+</button> </div>
+
+                <div class="product-item" data-category="susu" data-id="susu-full-cream">
+                    <img src="https://via.placeholder.com/150/FFD100/000000?text=Susu+Full+Cream" alt="Susu Full Cream" onclick="viewProductDetail('susu-full-cream')">
+                    <h3>Susu Full Cream</h3>
+                    <p class="price">Rp 7.000</p>
+                    <div class="rating">
+                        <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span> (5.0)
+                    </div>
+                    <button class="add-to-cart-btn" onclick="addToCart('susu-full-cream')">+</button> </div>
+
+                <div class="product-item" data-category="susu" data-id="susu-plain">
+                    <img src="https://via.placeholder.com/150/004F9F/FFFFFF?text=Susu+Plain" alt="Susu Plain" onclick="viewProductDetail('susu-plain')">
+                    <h3>Susu Plain</h3>
+                    <p class="price">Rp 6.000</p>
+                    <div class="rating">
+                        <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>☆</span> (4.0)
+                    </div>
+                    <button class="add-to-cart-btn" onclick="addToCart('susu-plain')">+</button> </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Data Produk (ini akan digunakan oleh home.html dan product-detail.html)
+        const productsData = [
+            {
+                id: 'ultra-milk-coklat',
+                name: 'Ultra Milk Coklat',
+                category: 'susu',
+                price: '5500', // Gunakan angka untuk perhitungan
+                rating: 4.5,
+                image: 'ultramilk.jpg',
+                description: 'Ultra Milk Coklat adalah susu UHT berkualitas tinggi dengan rasa coklat yang lezat, kaya vitamin dan mineral, cocok untuk segala usia.',
+                comments: []
+            },
+            {
+                id: 'chitato-sapi-panggang',
+                name: 'Chitato Sapi Panggang',
+                category: 'snack',
+                price: '10000',
+                rating: 5.0,
+                image: 'chitato.jpg',
+                description: 'Chitato Sapi Panggang adalah keripik kentang renyah dengan bumbu sapi panggang yang kuat, cocok untuk camilan santai.',
+                comments: []
+            },
+            {
+                id: 'qtela-singkong-balado',
+                name: 'Qtela Singkong Balado',
+                category: 'snack',
+                price: '8000',
+                rating: 4.0,
+                image: 'qtela.jpg',
+                description: 'Qtela Singkong Balado adalah keripik singkong dengan rasa balado pedas manis yang menggugah selera, camilan tradisional dengan sentuhan modern.',
+                comments: []
+            },
+            {
+                id: 'nutriboost-strawberry',
+                name: 'Nutriboost Strawberry',
+                category: 'susu',
+                price: '7500',
+                rating: 4.5,
+                image: 'nutribus.jpg',
+                description: 'Nutriboost Strawberry adalah minuman susu rasa strawberry yang menyegarkan, diperkaya dengan vitamin dan mineral untuk menjaga stamina.',
+                comments: []
+            },
+            {
+                id: 'mie-sedaap-goreng',
+                name: 'Mie Sedaap Goreng',
+                category: 'mie instan',
+                price: '3000',
+                rating: 5.0,
+                image: 'mie.jpg',
+                description: 'Mie Sedaap Goreng adalah mie instan goreng dengan bumbu kaya rasa dan taburan kriuk, sajian cepat dan lezat kapan saja.',
+                comments: []
+            },
+            {
+                id: 'susu-full-cream',
+                name: 'Susu Full Cream',
+                category: 'susu',
+                price: '7000',
+                rating: 5.0,
+                image: 'https://via.placeholder.com/150/FFD100/000000?text=Susu+Full+Cream',
+                description: 'Susu full cream pilihan untuk kebutuhan gizi harian Anda. Kaya akan kalsium dan vitamin D.',
+                comments: []
+            },
+            {
+                id: 'susu-plain',
+                name: 'Susu Plain',
+                category: 'susu',
+                price: '6000',
+                rating: 4.0,
+                image: 'https://via.placeholder.com/150/004F9F/FFFFFF?text=Susu+Plain',
+                description: 'Susu plain rendah lemak, cocok untuk diet atau sebagai tambahan dalam masakan dan minuman.',
+                comments: []
+            }
+        ];
+
+        function openMenu() {
+            document.getElementById("sidebarMenu").style.width = "250px";
+            document.getElementById("menuOverlay").style.display = "block";
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeMenu() {
+            document.getElementById("sidebarMenu").style.width = "0";
+            document.getElementById("menuOverlay").style.display = "none";
+            document.body.style.overflow = "auto";
+        }
+
+        function logout() {
+            localStorage.removeItem('loggedInUserName');
+            window.location.href = 'login.html';
+            alert('Anda telah berhasil logout.');
+        }
+
+        function openSettingsMenu() {
+            openMenu();
+        }
+
+        function searchProducts() {
+            const searchInput = document.getElementById('searchInput');
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            const productGrid = document.getElementById('productGrid');
+            const productItems = productGrid.getElementsByClassName('product-item');
+
+            for (let i = 0; i < productItems.length; i++) {
+                const productItem = productItems[i];
+                const productName = productItem.querySelector('h3').textContent.toLowerCase();
+                const productCategory = productItem.getAttribute('data-category').toLowerCase();
+
+                if (searchTerm === '' || productName.includes(searchTerm) || productCategory.includes(searchTerm)) {
+                    productItem.style.display = 'flex';
+                } else {
+                    productItem.style.display = 'none';
+                }
+            }
+        }
+
+        function searchProductsOnType() {
+            searchProducts();
+        }
+
+        function viewProductDetail(productId) {
+            window.location.href = `product-detail.html?id=${productId}`;
+        }
+
+        // --- KERANJANG BELANJA FUNCTIONS (Duplikat dari keranjang-belanja.html agar bisa diakses) ---
+        // IDEALNYA, FUNGSI-FUNGSI INI DILETAKKAN DI FILE JS TERPISAH DAN DI-INCLUDE KE SEMUA HALAMAN
+        function getCart() {
+            const cartString = localStorage.getItem('indomaretCart');
+            return cartString ? JSON.parse(cartString) : [];
+        }
+
+        function saveCart(cart) {
+            localStorage.setItem('indomaretCart', JSON.stringify(cart));
+        }
+
+        function addToCart(productId) {
+            const cart = getCart();
+            const existingItem = cart.find(item => item.id === productId);
+
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                const product = productsData.find(p => p.id === productId);
+                if (product) {
+                    // Pastikan harga adalah angka saat ditambahkan ke keranjang
+                    cart.push({
+                        id: product.id,
+                        name: product.name,
+                        price: parseFloat(product.price),
+                        image: product.image,
+                        quantity: 1,
+                        selected: true
+                    });
+                }
+            }
+            saveCart(cart);
+            alert(`${productsData.find(p => p.id === productId).name} ditambahkan ke keranjang!`);
+            // Tidak perlu renderCartItems() di home.html
+        }
+        // --- END KERANJANG BELANJA FUNCTIONS ---
+    </script>
+</body>
+</html>
